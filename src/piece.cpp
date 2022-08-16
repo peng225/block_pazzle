@@ -43,13 +43,18 @@ void Piece::rotate()
 
 void Piece::reflect()
 {
-    auto reflectedBody = std::vector<char>(WIDTH * HEIGHT);
     for (int y = 0; y < HEIGHT; y++)
     {
-        for (int x = 0; x < WIDTH; x++)
+        for (int x = 0; x < WIDTH/2; x++)
         {
-            reflectedBody.at(WIDTH - x - 1 + y * WIDTH) = getVal(x, y);
+            auto tmp = getVal(x, y);
+            setVal(x, y, getVal(WIDTH - x - 1, y));
+            setVal(WIDTH - x - 1, y, tmp);
         }
     }
-    body.swap(reflectedBody);
+}
+
+void Piece::setVal(int x, int y, char val)
+{
+    body.at(x + y * WIDTH) = val;
 }

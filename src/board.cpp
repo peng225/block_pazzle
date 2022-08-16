@@ -107,11 +107,6 @@ std::size_t Board::getHash() const {
     return hashVal;
 }
 
-void Board::setVal(int x, int y, char val)
-{
-    body.at(x + y * WIDTH) = val;
-}
-
 bool Board::canPut(int x, int y, const std::shared_ptr<Piece> piece) const {
     // Over all size check.
     if (WIDTH <= x + piece->WIDTH-1 || HEIGHT <= y + piece->HEIGHT-1) {

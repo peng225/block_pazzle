@@ -15,4 +15,5 @@ public:
 
 protected:
     std::vector<char> body;
+    void setVal(int x, int y, char val);
 };

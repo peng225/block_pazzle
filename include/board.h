@@ -16,7 +16,6 @@ public:
     std::size_t getHash() const;
 
 private:
-    void setVal(int x, int y, char val);
     bool canPut(int x, int y, const std::shared_ptr<Piece> piece) const;
 };
 
