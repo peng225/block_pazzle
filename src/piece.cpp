@@ -8,7 +8,7 @@ Piece::Piece(int width, int height, const std::vector<char> &body) : WIDTH(width
 
 char Piece::getVal(int x, int y) const
 {
-    return body.at(x + y * WIDTH);
+    return body[x + y * WIDTH];
 }
 
 void Piece::print() const
@@ -26,12 +26,12 @@ void Piece::print() const
 
 void Piece::rotate()
 {
-    auto rotatedBody = std::vector<char>(WIDTH * HEIGHT);
+    rotatedBody.resize(WIDTH * HEIGHT);
     for (int y = 0; y < HEIGHT; y++)
     {
         for (int x = 0; x < WIDTH; x++)
         {
-            rotatedBody.at(HEIGHT - y - 1 + x * HEIGHT) = getVal(x, y);
+            rotatedBody[HEIGHT - y - 1 + x * HEIGHT] = getVal(x, y);
         }
     }
     // Note that the WIDTH and HEIGHT is swapped.
