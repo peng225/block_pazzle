@@ -98,10 +98,40 @@ bool Board::operator!=(const Board &obj) const {
 }
 
 std::size_t Board::getHash() const {
-    std::size_t hashVal = 0;
-    for(const auto val : body) {
-        hashVal += static_cast<size_t>(val) - static_cast<size_t>(' ');
+    std::size_t hashVal = 1;
+
+    // Top edge
+    std::size_t tmpHashVal = 0;
+    for (int i = 0; i < WIDTH; i++)
+    {
+        tmpHashVal += getVal(i, 0);
     }
+    hashVal *= tmpHashVal;
+
+    // Bottom edge
+    tmpHashVal = 0;
+    for (int i = 0; i < WIDTH; i++)
+    {
+        tmpHashVal += getVal(i, HEIGHT - 1);
+    }
+    hashVal *= tmpHashVal;
+
+    // Left edge
+    tmpHashVal = 0;
+    for (int i = 0; i < HEIGHT; i++)
+    {
+        tmpHashVal += getVal(0, i);
+    }
+    hashVal *= tmpHashVal;
+
+    // Right edge
+    tmpHashVal = 0;
+    for (int i = 0; i < HEIGHT; i++)
+    {
+        tmpHashVal += getVal(WIDTH-1, i);
+    }
+    hashVal *= tmpHashVal;
+
     hashVal += WIDTH;
     hashVal += HEIGHT;
     return hashVal;

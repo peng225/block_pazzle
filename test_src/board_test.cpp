@@ -13,8 +13,10 @@ TEST(BoardTest, equal)
     EXPECT_NE(b1, b5);
     EXPECT_NE(b4, b5);
 
-    auto p1 = std::make_shared<Piece>(2, 2, std::vector<char>{'a', ' ', ' ', 'b'});
-    auto p2 = std::make_shared<Piece>(2, 2, std::vector<char>{'a', ' ', 'b', ' '});
+    auto p1 = std::make_shared<Piece>(2, 2, std::vector<char>{'a', ' ',
+                                                              ' ', 'b'});
+    auto p2 = std::make_shared<Piece>(1, 2, std::vector<char>{'a',
+                                                              'b'});
 
     b1.put(0, 0, p1);
     b2.put(0, 0, p1);
@@ -43,20 +45,27 @@ TEST(BoardTest, getHash)
     EXPECT_NE(b1.getHash(), b5.getHash());
     EXPECT_NE(b4.getHash(), b5.getHash());
 
-    auto p1 = std::make_shared<Piece>(2, 2, std::vector<char>{'a', ' ', ' ', 'b'});
-    auto p2 = std::make_shared<Piece>(2, 2, std::vector<char>{'a', ' ', 'b', ' '});
+    auto p1 = std::make_shared<Piece>(2, 2, std::vector<char>{'a', ' ',
+                                                              ' ', 'b'});
+    auto p2 = std::make_shared<Piece>(1, 2, std::vector<char>{'a',
+                                                              'b'});
 
     b1.put(0, 0, p1);
     b2.put(0, 0, p1);
     b3.put(0, 0, p2);
 
     EXPECT_EQ(b1.getHash(), b2.getHash());
-    EXPECT_EQ(b1.getHash(), b3.getHash());
-    EXPECT_EQ(b2.getHash(), b3.getHash());
+    EXPECT_NE(b1.getHash(), b3.getHash());
 
     auto b6 = b1;
     b1.reflect();
     EXPECT_EQ(b1.getHash(), b6.getHash());
     b1.rotate();
     EXPECT_EQ(b1.getHash(), b6.getHash());
+
+    b6 = b3;
+    b3.reflect();
+    EXPECT_EQ(b3.getHash(), b6.getHash());
+    b3.rotate();
+    EXPECT_EQ(b3.getHash(), b6.getHash());
 }
