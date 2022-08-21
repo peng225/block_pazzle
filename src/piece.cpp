@@ -26,6 +26,7 @@ void Piece::print() const
     }
 }
 
+std::vector<char> rotatedBody;
 void Piece::rotate()
 {
     rotatedBody.resize(WIDTH * HEIGHT);
