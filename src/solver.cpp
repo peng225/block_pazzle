@@ -73,7 +73,7 @@ void Solver::solveHelper(int xStart, int yStart)
                     pieceItr = pieces.erase(pieceItr);
                     // std::cout << "print before next helper call" << std::endl;
                     // board->print();
-                    solveHelper(0, 0);
+                    solveHelper(x, y);
                     if (!board->undo(x, y, tmpPiece)) {
                         std::cerr << "undo failed." << std::endl;
                         board->print();
