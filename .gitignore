@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+block_pazzle
+unittest
+
+perf.data
