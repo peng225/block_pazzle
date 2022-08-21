@@ -17,7 +17,10 @@ public:
 
 private:
     bool canPut(int x, int y, const std::shared_ptr<Piece> piece) const;
-    bool mirrorEqual(const Board& cmpObj) const;
+    bool checkEqual(const Board &cmpObj) const;
+    bool mirrorEqual(const Board &cmpObj) const;
+    bool rotate180Equal(const Board &cmpObj) const;
+    bool mirrornAndrotate180Equal(const Board &cmpObj) const;
 };
 
 namespace std

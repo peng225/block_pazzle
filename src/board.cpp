@@ -59,37 +59,46 @@ bool Board::isFull() const {
     return true;
 }
 
-bool Board::operator==(const Board &obj) const {
-    auto copiedObj = obj;
-    if (
-        (WIDTH != obj.WIDTH || HEIGHT != obj.HEIGHT) &&
-        (WIDTH != obj.HEIGHT || HEIGHT != obj.WIDTH))
+bool Board::checkEqual(const Board &cmpObj) const
+{
+    // Direct compare
+    if (body == cmpObj.body)
     {
-        return false;
+        return true;
     }
-    for (int i = 0; i < 4; i++)
+
+    // mirror compare
+    if (mirrorEqual(cmpObj))
     {
-        switch (i)
-        {
-        case 0:
-            break;
-        case 1:
-        case 2:
-        case 3:
-            copiedObj.rotate();
-            break;
-        }
-        if (WIDTH != copiedObj.WIDTH || HEIGHT != copiedObj.HEIGHT) {
-            continue;
-        }
-        // Direct compare
-        if (body == copiedObj.body) {
-            return true;
-        }
-        // mirror compare
-        if(mirrorEqual(copiedObj)) {
-            return true;
-        }
+        return true;
+    }
+
+    // 180 deg rotate compare
+    if (rotate180Equal(cmpObj))
+    {
+        return true;
+    }
+
+    // mirror and 180 deg rotate compare
+    if (mirrornAndrotate180Equal(cmpObj))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool Board::operator==(const Board &obj) const
+{
+    const Board* objPtr = &obj;
+    if (WIDTH == obj.WIDTH && HEIGHT == obj.HEIGHT) {
+        return checkEqual(*objPtr);
+    }
+    if (WIDTH == obj.HEIGHT && HEIGHT == obj.WIDTH) {
+        auto tmpObj = obj;
+        tmpObj.rotate();
+        objPtr = &tmpObj;
+        return checkEqual(*objPtr);
     }
     return false;
 }
@@ -101,6 +110,34 @@ bool Board::mirrorEqual(const Board &cmpObj) const
         for (int x = 0; x < WIDTH; x++)
         {
             if (getVal(x, y) != cmpObj.getVal(WIDTH - 1 - x, y))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Board::rotate180Equal(const Board &cmpObj) const {
+    for (int y = 0; y < HEIGHT; y++)
+    {
+        for (int x = 0; x < WIDTH; x++)
+        {
+            if (getVal(x, y) != cmpObj.getVal(WIDTH - 1 - x, HEIGHT - 1 - y))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Board::mirrornAndrotate180Equal(const Board &cmpObj) const {
+    for (int y = 0; y < HEIGHT; y++)
+    {
+        for (int x = 0; x < WIDTH; x++)
+        {
+            if (getVal(x, y) != cmpObj.getVal(x, HEIGHT - 1 - y))
             {
                 return false;
             }
