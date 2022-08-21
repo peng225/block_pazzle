@@ -1,9 +1,11 @@
 #include <piece.h>
 
+#include <cassert>
 #include <iostream>
 
 Piece::Piece(int width, int height, const std::vector<char> &body) : WIDTH(width), HEIGHT(height), body(body)
 {
+    assert(static_cast<size_t>(WIDTH * HEIGHT) == this->body.size());
 }
 
 char Piece::getVal(int x, int y) const
