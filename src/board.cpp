@@ -67,7 +67,7 @@ bool Board::operator==(const Board &obj) const {
     {
         return false;
     }
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 4; i++)
     {
         switch (i)
         {
@@ -76,21 +76,37 @@ bool Board::operator==(const Board &obj) const {
         case 1:
         case 2:
         case 3:
-        case 5:
-        case 6:
-        case 7:
             copiedObj.rotate();
             break;
-        case 4:
-            copiedObj.reflect();
-            break;
         }
-        if (WIDTH == copiedObj.WIDTH && HEIGHT == copiedObj.HEIGHT &&
-            body == copiedObj.body) {
+        if (WIDTH != copiedObj.WIDTH || HEIGHT != copiedObj.HEIGHT) {
+            continue;
+        }
+        // Direct compare
+        if (body == copiedObj.body) {
+            return true;
+        }
+        // mirror compare
+        if(mirrorEqual(copiedObj)) {
             return true;
         }
     }
     return false;
+}
+
+bool Board::mirrorEqual(const Board &cmpObj) const
+{
+    for (int y = 0; y < HEIGHT; y++)
+    {
+        for (int x = 0; x < WIDTH; x++)
+        {
+            if (getVal(x, y) != cmpObj.getVal(WIDTH - 1 - x, y))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 bool Board::operator!=(const Board &obj) const {
