@@ -12,6 +12,8 @@ public:
     void print() const;
     void rotate();
     void reflect();
+    bool operator==(const Piece &obj) const;
+    bool operator!=(const Piece &obj) const;
 
 protected:
     std::vector<char> body;

@@ -65,3 +65,19 @@ TEST(PieceTest, reflect)
     EXPECT_EQ('c', piece->getVal(1, 1));
     EXPECT_EQ(' ', piece->getVal(2, 1));
 }
+
+TEST(PieceTest, equal)
+{
+    std::vector<char> b1 = {'c', 'c', ' ',
+                              ' ', 'c', 'c'};
+    std::vector<char> b2 = {'c', 'c', 'c',
+                              ' ', 'c', 'c'};
+    auto p1 = std::make_shared<Piece>(3, 2, b1);
+    auto p2 = std::make_shared<Piece>(3, 2, b1);
+    auto p3 = std::make_shared<Piece>(3, 2, b2);
+    auto p4 = std::make_shared<Piece>(2, 3, b1);
+    EXPECT_EQ(*p1, *p2);
+    EXPECT_NE(*p1, *p3);
+    EXPECT_NE(*p1, *p3);
+    EXPECT_NE(*p1, *p4);
+}

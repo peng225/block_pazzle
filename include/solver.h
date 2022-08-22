@@ -1,6 +1,7 @@
 #pragma once
 
 #include <board.h>
+#include <piece_collection.h>
 
 #include <vector>
 #include <unordered_set>
@@ -14,7 +15,7 @@ public:
 
 private:
     std::shared_ptr<Board> board;
-    std::vector<std::shared_ptr<Piece>> pieces;
+    std::vector<std::shared_ptr<PieceCollection>> pieceCollections;
     std::unordered_set<Board> searchedBoard;
 
     void solveHelper(int xStart, int yStart);

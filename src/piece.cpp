@@ -61,3 +61,12 @@ void Piece::setVal(int x, int y, char val)
 {
     body.at(x + y * WIDTH) = val;
 }
+
+bool Piece::operator==(const Piece &obj) const {
+    return WIDTH == obj.WIDTH && HEIGHT == obj.HEIGHT && body == obj.body;
+}
+
+bool Piece::operator!=(const Piece &obj) const
+{
+    return !(*this == obj);
+}
