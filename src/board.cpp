@@ -150,7 +150,8 @@ bool Board::operator!=(const Board &obj) const {
     return !(*this == obj);
 }
 
-std::size_t Board::getHash() const {
+std::size_t Board::getHash() const
+{
     std::size_t hashVal = 1;
 
     // Top edge
@@ -158,6 +159,13 @@ std::size_t Board::getHash() const {
     for (int i = 0; i < WIDTH; i++)
     {
         tmpHashVal += getVal(i, 0);
+    }
+    hashVal *= tmpHashVal;
+
+    tmpHashVal = 0;
+    for (int i = 1; i < WIDTH-1; i++)
+    {
+        tmpHashVal += getVal(i, 1);
     }
     hashVal *= tmpHashVal;
 
@@ -169,6 +177,13 @@ std::size_t Board::getHash() const {
     }
     hashVal *= tmpHashVal;
 
+    tmpHashVal = 0;
+    for (int i = 1; i < WIDTH - 1; i++)
+    {
+        tmpHashVal += getVal(i, HEIGHT-2);
+    }
+    hashVal *= tmpHashVal;
+
     // Left edge
     tmpHashVal = 0;
     for (int i = 0; i < HEIGHT; i++)
@@ -177,11 +192,25 @@ std::size_t Board::getHash() const {
     }
     hashVal *= tmpHashVal;
 
+    tmpHashVal = 0;
+    for (int i = 1; i < HEIGHT - 1; i++)
+    {
+        tmpHashVal += getVal(1, i);
+    }
+    hashVal *= tmpHashVal;
+
     // Right edge
     tmpHashVal = 0;
     for (int i = 0; i < HEIGHT; i++)
     {
         tmpHashVal += getVal(WIDTH-1, i);
+    }
+    hashVal *= tmpHashVal;
+
+    tmpHashVal = 0;
+    for (int i = 1; i < HEIGHT - 1; i++)
+    {
+        tmpHashVal += getVal(WIDTH-2, i);
     }
     hashVal *= tmpHashVal;
 

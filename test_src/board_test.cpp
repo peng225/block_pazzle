@@ -35,10 +35,10 @@ TEST(BoardTest, equal)
 
 TEST(BoardTest, getHash)
 {
-    Board b1(2, 3);
-    Board b2(2, 3);
-    Board b3(2, 3);
-    Board b4(3, 2);
+    Board b1(4, 3);
+    Board b2(4, 3);
+    Board b3(4, 3);
+    Board b4(3, 4);
     Board b5(2, 4);
 
     EXPECT_EQ(b1.getHash(), b4.getHash());
@@ -50,9 +50,10 @@ TEST(BoardTest, getHash)
     auto p2 = std::make_shared<Piece>(1, 2, std::vector<char>{'a',
                                                               'b'});
 
-    b1.put(0, 0, p1);
-    b2.put(0, 0, p1);
-    b3.put(0, 0, p2);
+    EXPECT_TRUE(b1.put(0, 0, p1));
+    EXPECT_TRUE(b2.put(0, 0, p1));
+    EXPECT_TRUE(b3.put(0, 0, p1));
+    EXPECT_TRUE(b3.put(0, 1, p2));
 
     EXPECT_EQ(b1.getHash(), b2.getHash());
     EXPECT_NE(b1.getHash(), b3.getHash());
