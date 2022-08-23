@@ -3,20 +3,19 @@
 #include <piece.h>
 
 #include <vector>
-#include <memory>
 
 class Board : public Piece {
 public:
     Board(int width, int height);
-    bool put(int x, int y, const std::shared_ptr<Piece> piece);
-    bool undo(int x, int y, const std::shared_ptr<Piece> piece);
+    bool put(int x, int y, const Piece& piece);
+    bool undo(int x, int y, const Piece& piece);
     bool isFull() const;
     bool operator==(const Board &obj) const;
     bool operator!=(const Board &obj) const;
     std::size_t getHash() const;
 
 private:
-    bool canPut(int x, int y, const std::shared_ptr<Piece> piece) const;
+    bool canPut(int x, int y, const Piece& piece) const;
     bool checkEqual(const Board &cmpObj) const;
     bool mirrorEqual(const Board &cmpObj) const;
     bool rotate180Equal(const Board &cmpObj) const;

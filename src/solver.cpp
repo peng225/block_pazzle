@@ -47,7 +47,7 @@ void Solver::solveHelper(int xStart, int yStart, int depth)
                 for (int x = (y == yStart ? xStart : 0); x < board->WIDTH; x++)
                 {
                     // std::cout << "X, y = " << x << ", " << y << std::endl;
-                    if (!board->put(x, y, piece))
+                    if (!board->put(x, y, *piece))
                     {
                         // std::cout << "cannot put" << std::endl;
                         continue;
@@ -58,7 +58,7 @@ void Solver::solveHelper(int xStart, int yStart, int depth)
                     // std::cout << "print before next helper call" << std::endl;
                     // board->print();
                     solveHelper(x, y, depth+1);
-                    if (!board->undo(x, y, piece)) {
+                    if (!board->undo(x, y, *piece)) {
                         std::cerr << "undo failed." << std::endl;
                         board->print();
                         piece->print();

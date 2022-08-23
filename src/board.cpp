@@ -8,18 +8,18 @@ Board::Board(int width, int height) {
     body.resize(width * height, ' ');
 }
 
-bool Board::put(int x, int y, const std::shared_ptr<Piece> piece)
+bool Board::put(int x, int y, const Piece& piece)
 {
     if(!canPut(x, y, piece)) {
         // std::cout << "put failed" << std::endl;
         return false;
     }
 
-    for (int yOffset = 0; yOffset < piece->HEIGHT; yOffset++)
+    for (int yOffset = 0; yOffset < piece.HEIGHT; yOffset++)
     {
-        for (int xOffset = 0; xOffset < piece->WIDTH; xOffset++)
+        for (int xOffset = 0; xOffset < piece.WIDTH; xOffset++)
         {
-            auto pieceVal = piece->getVal(xOffset, yOffset);
+            auto pieceVal = piece.getVal(xOffset, yOffset);
             if (pieceVal != ' ')
             {
                 setVal(x + xOffset, y + yOffset, pieceVal);
@@ -29,12 +29,12 @@ bool Board::put(int x, int y, const std::shared_ptr<Piece> piece)
     return true;
 }
 
-bool Board::undo(int x, int y, const std::shared_ptr<Piece> piece) {
-    for (int yOffset = 0; yOffset < piece->HEIGHT; yOffset++)
+bool Board::undo(int x, int y, const Piece& piece) {
+    for (int yOffset = 0; yOffset < piece.HEIGHT; yOffset++)
     {
-        for (int xOffset = 0; xOffset < piece->WIDTH; xOffset++)
+        for (int xOffset = 0; xOffset < piece.WIDTH; xOffset++)
         {
-            auto pieceVal = piece->getVal(xOffset, yOffset);
+            auto pieceVal = piece.getVal(xOffset, yOffset);
             if (pieceVal == ' ')
             {
                 continue;
@@ -219,17 +219,17 @@ std::size_t Board::getHash() const
     return hashVal;
 }
 
-bool Board::canPut(int x, int y, const std::shared_ptr<Piece> piece) const {
+bool Board::canPut(int x, int y, const Piece& piece) const {
     // Over all size check.
-    if (WIDTH <= x + piece->WIDTH-1 || HEIGHT <= y + piece->HEIGHT-1) {
+    if (WIDTH <= x + piece.WIDTH-1 || HEIGHT <= y + piece.HEIGHT-1) {
         // std::cout << "piece out of range." << std::endl;
         return false;
     }
-    for (int yOffset = 0; yOffset < piece->HEIGHT; yOffset++)
+    for (int yOffset = 0; yOffset < piece.HEIGHT; yOffset++)
     {
-        for (int xOffset = 0; xOffset < piece->WIDTH; xOffset++)
+        for (int xOffset = 0; xOffset < piece.WIDTH; xOffset++)
         {
-            auto pieceVal = piece->getVal(xOffset, yOffset);
+            auto pieceVal = piece.getVal(xOffset, yOffset);
             auto boardVal = getVal(x + xOffset, y + yOffset);
             if (pieceVal != ' ' && boardVal != ' ') {
                 // std::cout << "both not space" << std::endl;
