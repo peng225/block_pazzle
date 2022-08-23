@@ -15,16 +15,18 @@ void Solver::addPiece(std::shared_ptr<Piece> piece)
 }
 
 void Solver::solve(){
-    solveHelper(0, 0);
+    solveHelper(0, 0, 0);
 }
 
-void Solver::solveHelper(int xStart, int yStart)
+void Solver::solveHelper(int xStart, int yStart, int depth)
 {
-    if (searchedBoard.contains(*board)) {
-        // std::cout << "skip" << std::endl;
-        return;
+    if(depth < 8) {
+        if (searchedBoard.contains(*board)) {
+            // std::cout << "skip" << std::endl;
+            return;
+        }
+        searchedBoard.emplace(*board);
     }
-    searchedBoard.emplace(*board);
     if (board->isFull())
     {
         std::cout << "SOLVED!" << std::endl;
@@ -55,7 +57,7 @@ void Solver::solveHelper(int xStart, int yStart)
                     pieceCollectionItr = pieceCollections.erase(pieceCollectionItr);
                     // std::cout << "print before next helper call" << std::endl;
                     // board->print();
-                    solveHelper(x, y);
+                    solveHelper(x, y, depth+1);
                     if (!board->undo(x, y, piece)) {
                         std::cerr << "undo failed." << std::endl;
                         board->print();

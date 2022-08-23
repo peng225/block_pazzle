@@ -18,5 +18,5 @@ private:
     std::vector<std::shared_ptr<PieceCollection>> pieceCollections;
     std::unordered_set<Board> searchedBoard;
 
-    void solveHelper(int xStart, int yStart);
+    void solveHelper(int xStart, int yStart, int depth);
 };
