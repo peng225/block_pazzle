@@ -59,7 +59,7 @@ void Piece::reflect()
 
 void Piece::setVal(int x, int y, char val)
 {
-    body.at(x + y * WIDTH) = val;
+    body[x + y * WIDTH] = val;
 }
 
 bool Piece::operator==(const Piece &obj) const {
