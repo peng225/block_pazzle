@@ -41,10 +41,10 @@ void Solver::solveHelper(int xStart, int yStart, int depth)
             auto piece = (*pieceCollectionItr)->next();
             // std::cout << "current piece" << std::endl;
             // piece->print();
-            for (int y = yStart; y < board->HEIGHT; y++)
+            for (int y = yStart; y < board->HEIGHT-piece->HEIGHT+1; y++)
             {
                 bool isPut = false;
-                for (int x = (y == yStart ? xStart : 0); x < board->WIDTH; x++)
+                for (int x = (y == yStart ? xStart : 0); x < board->WIDTH-piece->WIDTH+1; x++)
                 {
                     // std::cout << "X, y = " << x << ", " << y << std::endl;
                     if (!board->put(x, y, *piece))
