@@ -29,8 +29,12 @@ void Solver::solveHelper(int xStart, int yStart, int depth)
     }
     if (board->isFull())
     {
-        std::cout << "SOLVED!" << std::endl;
-        board->print();
+        if (answer.find(*board) == std::end(answer))
+        {
+            answer.emplace(*board);
+            std::cout << "SOLVED! " << answer.size() << " answer(s) found." << std::endl;
+            board->print();
+        }
         return;
     }
 

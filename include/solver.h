@@ -17,6 +17,7 @@ private:
     std::shared_ptr<Board> board;
     std::vector<std::shared_ptr<PieceCollection>> pieceCollections;
     std::unordered_set<Board> searchedBoard;
+    std::unordered_set<Board> answer;
 
     void solveHelper(int xStart, int yStart, int depth);
     bool hasDeadSpace(int xStart, int yStart, int width, int height) const;
