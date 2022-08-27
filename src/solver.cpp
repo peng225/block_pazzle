@@ -52,21 +52,24 @@ void Solver::solveHelper(int xStart, int yStart, int depth)
                         // std::cout << "cannot put" << std::endl;
                         continue;
                     }
-                    // std::cout << "can put" << std::endl;
-                    auto tmpPieceCollectionPtr = *pieceCollectionItr;
-                    pieceCollectionItr = pieceCollections.erase(pieceCollectionItr);
-                    // std::cout << "print before next helper call" << std::endl;
-                    // board->print();
-                    solveHelper(x, y, depth+1);
-                    if (!board->undo(x, y, *piece)) {
+                    if(!hasDeadSpace(x-1, y-1, piece->WIDTH+2, piece->HEIGHT+2)) {
+                        // std::cout << "can put" << std::endl;
+                        auto tmpPieceCollectionPtr = *pieceCollectionItr;
+                        pieceCollectionItr = pieceCollections.erase(pieceCollectionItr);
+                        // std::cout << "print before next helper call" << std::endl;
+                        // board->print();
+                        solveHelper(x, y, depth+1);
+                        pieceCollectionItr = pieceCollections.insert(pieceCollectionItr, tmpPieceCollectionPtr);
+                        // std::cout << "print after helper call and recover" << std::endl;
+                        // board->print();
+                    }
+                    if (!board->undo(x, y, *piece))
+                    {
                         std::cerr << "undo failed." << std::endl;
                         board->print();
                         piece->print();
                         return;
                     }
-                    pieceCollectionItr = pieceCollections.insert(pieceCollectionItr, tmpPieceCollectionPtr);
-                    // std::cout << "print after helper call and recover" << std::endl;
-                    // board->print();
                     isPut = true;
                     break;
                 }
@@ -77,4 +80,30 @@ void Solver::solveHelper(int xStart, int yStart, int depth)
         }
         (*pieceCollectionItr)->reset();
     }
+}
+
+bool Solver::hasDeadSpace(int xStart, int yStart, int width, int height) const
+{
+    xStart = std::max(0, xStart);
+    yStart = std::max(0, yStart);
+    width = std::min(board->WIDTH - xStart, width);
+    height = std::min(board->HEIGHT - yStart, height);
+    for (int y = yStart; y < yStart + height; y++)
+    {
+        for (int x = xStart; x < xStart + width; x++)
+        {
+            if(board->getVal(x, y) != ' ') {
+                continue;
+            }
+            if (
+                (x == 0 || board->getVal(x - 1, y) != ' ') &&
+                (x == board->WIDTH - 1 || board->getVal(x + 1, y) != ' ') &&
+                (y == 0 || board->getVal(x, y - 1) != ' ') &&
+                (y == board->HEIGHT - 1 || board->getVal(x, y + 1) != ' '))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
