@@ -20,7 +20,7 @@ void Solver::solve(){
 
 void Solver::solveHelper(int xStart, int yStart, int depth)
 {
-    if(depth < 8) {
+    if(depth < 6) {
         if (searchedBoard.contains(*board)) {
             // std::cout << "skip" << std::endl;
             return;
