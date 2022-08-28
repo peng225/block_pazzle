@@ -21,4 +21,5 @@ private:
 
     void solveHelper(int xStart, int yStart, int depth);
     bool hasDeadSpace(int xStart, int yStart, int width, int height) const;
+    bool hasSpaceInUpperLeftArea(int xStart, int yStart) const;
 };

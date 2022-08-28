@@ -38,6 +38,10 @@ void Solver::solveHelper(int xStart, int yStart, int depth)
         return;
     }
 
+    if(hasSpaceInUpperLeftArea(xStart, yStart)) {
+        return;
+    }
+
     for (auto pieceCollectionItr = std::begin(pieceCollections);
             pieceCollectionItr != std::end(pieceCollections); pieceCollectionItr++)
     {
@@ -107,6 +111,23 @@ bool Solver::hasDeadSpace(int xStart, int yStart, int width, int height) const
             {
                 return true;
             }
+        }
+    }
+    return false;
+}
+
+bool Solver::hasSpaceInUpperLeftArea(int xStart, int yStart) const
+{
+    for (int x = 0; x < xStart; x++)
+    {
+        if (board->getVal(x, yStart) == ' ')
+        {
+            return true;
+        }
+    }
+    for (int y = 0; y < yStart; y++) {
+        if(board->getVal(xStart, y) == ' ') {
+            return true;
         }
     }
     return false;
