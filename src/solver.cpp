@@ -60,7 +60,7 @@ void Solver::solveHelper(int xStart, int yStart, int depth)
                         // std::cout << "cannot put" << std::endl;
                         continue;
                     }
-                    if(!hasDeadSpace(x-1, y-1, piece->WIDTH+2, piece->HEIGHT+2)) {
+                    if(!hasDeadSpace(x-1, y-1, piece->WIDTH+1, piece->HEIGHT+1)) {
                         // std::cout << "can put" << std::endl;
                         auto tmpPieceCollectionPtr = *pieceCollectionItr;
                         pieceCollectionItr = pieceCollections.erase(pieceCollectionItr);
